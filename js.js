@@ -3,7 +3,7 @@ function Gameboard() {
   const columns = 3;
   const board = [];
 
-  // create a 2d array.
+  // 2d array
   for (let i = 0; i < rows; i++) {
     board[i] = [];
     for (let j = 0; j < columns; j++) {
@@ -11,19 +11,29 @@ function Gameboard() {
     }
   }
 
+  function Cell() {}
 
-   const players = [
-    {
-      name: playerOneName,
-      token: X
-    },
-    {
-      name: playerTwoName,
-      token: O
-    }
-  ];
-  // This will be the method of getting the entire board that our
-  // UI will eventually need to render it.
-  const getBoard = () => board;
+  function GameController(
+    playeroneName = "player one",
+    playertwoName = "player two"
+  ) {
+    const board = Gameboard();
+
+    const players = [
+      {
+        name: playeroneName,
+        token: X,
+      },
+      {
+        name: playertwoName,
+        token: O,
+      },
+    ];
+    let activePlayer = players[0];
+
+    const switchPlayerTurn = () => {
+      activePlayer = activePlayer === players[0] ? players[1] : players[0];
+    };
+    
+  }
 }
-
