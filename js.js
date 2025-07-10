@@ -11,7 +11,9 @@ function Gameboard() {
     }
   }
 
-  function Cell() {}
+  function Cell() {
+    let value = 0;
+  }
 
   function GameController(
     playeroneName = "player one",
@@ -34,6 +36,7 @@ function Gameboard() {
     const switchPlayerTurn = () => {
       activePlayer = activePlayer === players[0] ? players[1] : players[0];
     };
-    
   }
 }
+
+const game = GameController();
