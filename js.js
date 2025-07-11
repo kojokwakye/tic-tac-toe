@@ -28,15 +28,21 @@ function Gameboard() {
     );
     console.log(boardWithCellValues);
   };
-
-  return { printBoard };
+  const getBoard = () => board;
+  const tokenPlacement = (column, row, token) => {
+    if (board[row][column].getValue() === 0) {
+      board[row][column].addToken(token);
+      return true;
+    } else {
+      return false;
+    }
+  };
+  return { getBoard, tokenPlacement, printBoard };
 }
 
-function GameController(
-  playerOneName = "player one",
-  playerTwoName = "player two"
-) {
+function GameController(playerOneName = "X", playerTwoName = "0") {
   const board = Gameboard();
+  // const actualBoard = board.getBoard();
 
   const players = [
     {
@@ -54,12 +60,27 @@ function GameController(
     activePlayer = activePlayer === players[0] ? players[1] : players[0];
   };
 
-  const playRound = (column) => {
-    console.log(`dfdsf ${column}`);
-    board(column);
-    switchPlayerTurn();
+  const getActivePlayer = () => activePlayer;
+
+  const printNewRound = () => {
+    board.printBoard();
+    console.log(`${getActivePlayer().name}'s turn`);
   };
 
+  const playRound = (column, row) => {
+    const moveSucessful = board.tokenPlacement(column, row, getActivePlayer().token);
+
+    //check for winner and loser logic
+    if (moveSucessful) {
+      // switch player
+      switchPlayerTurn();
+      printNewRound();
+    } else {
+      console.log("spot taken");
+    }
+  };
+
+  printNewRound();
   return { playRound, printBoard: board.printBoard };
 }
 
