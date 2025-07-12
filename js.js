@@ -14,8 +14,7 @@ function Gameboard() {
   const columns = 3;
   const board = [];
 
-  // 2d board
-
+  // board
   for (let i = 0; i < rows; i++) {
     board[i] = [];
     for (let j = 0; j < columns; j++) {
@@ -42,7 +41,6 @@ function Gameboard() {
 
 function GameController(playerOneName = "X", playerTwoName = "0") {
   const board = Gameboard();
-  // const actualBoard = board.getBoard();
 
   const players = [
     {
@@ -68,9 +66,19 @@ function GameController(playerOneName = "X", playerTwoName = "0") {
   };
 
   const playRound = (column, row) => {
-    const moveSucessful = board.tokenPlacement(column, row, getActivePlayer().token);
+    const moveSucessful = board.tokenPlacement(
+      column,
+      row,
+      getActivePlayer().token,
+      console.log(`${getActivePlayer().name} dropped in ${column},${row} `)
+    );
 
-    //check for winner and loser logic
+    // check for win and lose logic
+    function checkWin (){
+      if () {
+        console.log('win')
+      }
+    }
     if (moveSucessful) {
       // switch player
       switchPlayerTurn();
