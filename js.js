@@ -1,4 +1,6 @@
 function Gameboard() {
+  // board
+
   function Cell() {
     let value = 0;
 
@@ -14,7 +16,6 @@ function Gameboard() {
   const columns = 3;
   const board = [];
 
-  // board
   for (let i = 0; i < rows; i++) {
     board[i] = [];
     for (let j = 0; j < columns; j++) {
@@ -74,13 +75,15 @@ function GameController(playerOneName = "X", playerTwoName = "0") {
     );
 
     // check for win and lose logic
-    function checkWin (){
-      if () {
-        console.log('win')
-      }
+    // a token is in each cell diagonally or in a  straight row or column
+    function checkWin() {
+      // if ( cell ) {
+      //   console.log("win");
+      // }
     }
     if (moveSucessful) {
       // switch player
+      checkWin();
       switchPlayerTurn();
       printNewRound();
     } else {
@@ -93,4 +96,13 @@ function GameController(playerOneName = "X", playerTwoName = "0") {
 }
 
 const game = GameController();
+game.playRound(0, 0);
+game.playRound(0, 1);
+game.playRound(0, 2);
+game.playRound(1, 0);
+game.playRound(1, 1);
+game.playRound(1, 2);
+game.playRound(2, 0);
+game.playRound(2, 1);
+game.playRound(2, 2);
 game.printBoard();
