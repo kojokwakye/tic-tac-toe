@@ -11,7 +11,7 @@ function Gameboard() {
 
     return { addToken, getValue };
   }
-
+  //  2d array
   const rows = 3;
   const columns = 3;
   const board = [];
@@ -22,16 +22,22 @@ function Gameboard() {
       board[i].push(Cell());
     }
   }
+
+  // printing board
   const printBoard = () => {
+    //  Converts each cell to its value for display
     const boardWithCellValues = board.map((row) =>
       row.map((cell) => cell.getValue())
     );
     console.log(boardWithCellValues);
   };
+
+  // dropping tokens
   const getBoard = () => board;
   const tokenPlacement = (column, row, token) => {
     if (board[row][column].getValue() === 0) {
-      board[row][column].addToken(token);
+      // chec if the cell is empty
+      board[row][column].addToken(token); // places the token if empty
       return true;
     } else {
       return false;
@@ -43,6 +49,7 @@ function Gameboard() {
 function GameController(playerOneName = "X", playerTwoName = "0") {
   const board = Gameboard();
 
+  // player variables
   const players = [
     {
       name: playerOneName,
@@ -55,6 +62,7 @@ function GameController(playerOneName = "X", playerTwoName = "0") {
   ];
   let activePlayer = players[0];
 
+  // switch player
   const switchPlayerTurn = () => {
     activePlayer = activePlayer === players[0] ? players[1] : players[0];
   };
@@ -70,20 +78,23 @@ function GameController(playerOneName = "X", playerTwoName = "0") {
     const moveSucessful = board.tokenPlacement(
       column,
       row,
-      getActivePlayer().token,
-      console.log(`${getActivePlayer().name} dropped in ${column},${row} `)
+      getActivePlayer().token
+      // console.log(`${getActivePlayer().name} dropped in ${column},${row} `)
     );
+    console.log(`${getActivePlayer().name} dropped in ${column},${row} `);
+    // check for win, lose  and tie logic
+    // a token is in each cell
+    // diagonally or in a  straight row or column
+    // declare win
 
-    // check for win and lose logic
-    // a token is in each cell diagonally or in a  straight row or column
-    function checkWin() {
-      // if ( cell ) {
-      //   console.log("win");
-      // }
+    const fullBoard = () => {
+      
     }
+
+ 
     if (moveSucessful) {
       // switch player
-      checkWin();
+      // checkWIn();
       switchPlayerTurn();
       printNewRound();
     } else {
@@ -96,13 +107,14 @@ function GameController(playerOneName = "X", playerTwoName = "0") {
 }
 
 const game = GameController();
+// play every round to check for tie
 game.playRound(0, 0);
 game.playRound(0, 1);
-game.playRound(0, 2);
-game.playRound(1, 0);
 game.playRound(1, 1);
+game.playRound(0, 2);
 game.playRound(1, 2);
+game.playRound(1, 0);
 game.playRound(2, 0);
-game.playRound(2, 1);
 game.playRound(2, 2);
+game.playRound(2, 1);
 game.printBoard();
