@@ -25,7 +25,7 @@ function Gameboard() {
 
   // printing board
   const printBoard = () => {
-    //  Converts each cell to its value for display
+    //  converts each cell to its value for display
     const boardWithCellValues = board.map((row) =>
       row.map((cell) => cell.getValue())
     );
@@ -87,9 +87,10 @@ function GameController(playerOneName = "X", playerTwoName = "0") {
     // diagonally or in a  straight row or column
     // declare win
 
-    const fullBoard = () => {
-      
-    }
+    // const fullBoard = () => {
+ 
+    //   console.log('tie')
+    // }
 
  
     if (moveSucessful) {
