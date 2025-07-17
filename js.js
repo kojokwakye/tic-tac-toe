@@ -3,7 +3,6 @@ function Gameboard() {
 
   function Cell() {
     let value = 0;
-
     const addToken = (player) => {
       value = player;
     };
@@ -71,7 +70,7 @@ function GameController(playerOneName = "X", playerTwoName = "0") {
 
   const printNewRound = () => {
     board.printBoard();
-    console.log(`${getActivePlayer().name}'s turn`);
+    // console.log(`${getActivePlayer().name}'s turn`);
   };
 
   const playRound = (column, row) => {
@@ -87,15 +86,11 @@ function GameController(playerOneName = "X", playerTwoName = "0") {
     // diagonally or in a  straight row or column
     // declare win
 
-    // const fullBoard = () => {
- 
-    //   console.log('tie')
-    // }
-
- 
     if (moveSucessful) {
+      if (fullBoard()) {
+        return;
+      }
       // switch player
-      // checkWIn();
       switchPlayerTurn();
       printNewRound();
     } else {
@@ -103,8 +98,22 @@ function GameController(playerOneName = "X", playerTwoName = "0") {
     }
   };
 
+  const fullBoard = () => {
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        // checking the cell
+        if (board.getBoard()[i][j].getValue() === 0) {
+          // if the cell is empty
+          return false;
+        }
+      }
+    }
+    console.log("tie");
+    return true;
+  };
+
   printNewRound();
-  return { playRound, printBoard: board.printBoard };
+  return { playRound, printBoard: board.printBoard, fullBoard };
 }
 
 const game = GameController();
