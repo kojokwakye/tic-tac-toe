@@ -87,7 +87,11 @@ function GameController(playerOneName = "X", playerTwoName = "0") {
     // declare win
 
     if (moveSucessful) {
-      if (fullBoard()) {
+      const winner = checkWin();
+      if (winner) {
+        console.log(`${winner.name || winner} wins!`);
+        return;
+      } else if (fullBoard()) {
         return;
       }
       // switch player
@@ -96,6 +100,69 @@ function GameController(playerOneName = "X", playerTwoName = "0") {
     } else {
       console.log("spot taken");
     }
+  };
+
+  const winPatterns = [
+    // rows
+    [
+      [0, 0],
+      [0, 1],
+      [0, 2],
+    ],
+    [
+      [1, 0],
+      [1, 1],
+      [1, 2],
+    ],
+    [
+      [2, 0],
+      [2, 1],
+      [2, 2],
+    ],
+    // columns
+    [
+      [0, 0],
+      [1, 0],
+      [2, 0],
+    ],
+    [
+      [0, 1],
+      [1, 1],
+      [2, 1],
+    ],
+    [
+      [0, 2],
+      [1, 2],
+      [2, 2],
+    ],
+    // diagonals
+    [
+      [0, 0],
+      [1, 1],
+      [2, 2],
+    ],
+    [
+      [0, 2],
+      [1, 1],
+      [2, 0],
+    ],
+  ];
+
+  const checkWin = () => {
+    for (const pattern of winPatterns) {
+      const values = pattern.map(([row, col]) =>
+        board.getBoard()[row][col].getValue()
+      );
+      if (
+        values[0] === values[1] &&
+        values[1] === values[2] &&
+        values[0] !== 0
+      ) {
+        const winner = players.find((player) => player.token === values[0]);
+        return winner; // returns the whole player object
+      }
+    }
+    return false; // no win
   };
 
   const fullBoard = () => {
@@ -113,21 +180,11 @@ function GameController(playerOneName = "X", playerTwoName = "0") {
   };
 
   printNewRound();
-  return { playRound, printBoard: board.printBoard, fullBoard };
+  return { playRound, printBoard: board.printBoard, checkWin, fullBoard };
 }
 
 const game = GameController();
 // play every round to check for tie
-// game.playRound(0, 0);
-// game.playRound(0, 1);
-// game.playRound(1, 1);
-// game.playRound(0, 2);
-// game.playRound(1, 2);
-// game.playRound(1, 0);
-// game.playRound(2, 0);
-// game.playRound(2, 2);
-// game.playRound(2, 1);
-// play round to declare win for X diagonally
 game.playRound(0, 0);
 game.playRound(0, 1);
 game.playRound(1, 1);
@@ -135,6 +192,16 @@ game.playRound(0, 2);
 game.playRound(1, 2);
 game.playRound(1, 0);
 game.playRound(2, 0);
-game.playRound(2, 1);
 game.playRound(2, 2);
+game.playRound(2, 1);
+// play round to declare win for X in a column
+// game.playRound(0, 1);
+// game.playRound(1, 1);
+// game.playRound(0, 2);
+// game.playRound(1, 2);
+// game.playRound(1, 0);
+// game.playRound(2, 0);
+// game.playRound(0, 0);
+// game.playRound(2, 2);
+// // game.playRound(2, 1); remove this round out to check for win
 game.printBoard();
