@@ -118,6 +118,16 @@ function GameController(playerOneName = "X", playerTwoName = "0") {
 
 const game = GameController();
 // play every round to check for tie
+// game.playRound(0, 0);
+// game.playRound(0, 1);
+// game.playRound(1, 1);
+// game.playRound(0, 2);
+// game.playRound(1, 2);
+// game.playRound(1, 0);
+// game.playRound(2, 0);
+// game.playRound(2, 2);
+// game.playRound(2, 1);
+// play round to declare win for X diagonally
 game.playRound(0, 0);
 game.playRound(0, 1);
 game.playRound(1, 1);
@@ -125,16 +135,6 @@ game.playRound(0, 2);
 game.playRound(1, 2);
 game.playRound(1, 0);
 game.playRound(2, 0);
-game.playRound(2, 2);
 game.playRound(2, 1);
-// play round to declare win for X
-game.playRound(0, 0);
-game.playRound(0, 1);
-game.playRound(1, 1);
-game.playRound(0, 2);
-game.playRound(1, 2);
-game.playRound(1, 0);
-game.playRound(2, 0);
 game.playRound(2, 2);
-game.playRound(2, 1);
 game.printBoard();
