@@ -70,7 +70,7 @@ function GameController(playerOneName = "X", playerTwoName = "0") {
 
   const printNewRound = () => {
     board.printBoard();
-    // console.log(`${getActivePlayer().name}'s turn`);
+    console.log(`${getActivePlayer().name}'s turn`);
   };
 
   const playRound = (column, row) => {
@@ -78,18 +78,15 @@ function GameController(playerOneName = "X", playerTwoName = "0") {
       column,
       row,
       getActivePlayer().token
-      // console.log(`${getActivePlayer().name} dropped in ${column},${row} `)
     );
     console.log(`${getActivePlayer().name} dropped in ${column},${row} `);
-    // check for win, lose  and tie logic
-    // a token is in each cell
-    // diagonally or in a  straight row or column
-    // declare win
 
     if (moveSucessful) {
       const winner = checkWin();
       if (winner) {
         console.log(`${winner.name || winner} wins!`);
+        // board.printBoard();
+
         return;
       } else if (fullBoard()) {
         return;
@@ -99,6 +96,7 @@ function GameController(playerOneName = "X", playerTwoName = "0") {
       printNewRound();
     } else {
       console.log("spot taken");
+      // board.printBoard();
     }
   };
 
@@ -185,23 +183,30 @@ function GameController(playerOneName = "X", playerTwoName = "0") {
 
 const game = GameController();
 // play every round to check for tie
-game.playRound(0, 0);
-game.playRound(0, 1);
-game.playRound(1, 1);
-game.playRound(0, 2);
-game.playRound(1, 2);
-game.playRound(1, 0);
-game.playRound(2, 0);
-game.playRound(2, 2);
-game.playRound(2, 1);
-// play round to declare win for X in a column
+
+// game.playRound(0, 0);
 // game.playRound(0, 1);
 // game.playRound(1, 1);
 // game.playRound(0, 2);
 // game.playRound(1, 2);
 // game.playRound(1, 0);
 // game.playRound(2, 0);
-// game.playRound(0, 0);
 // game.playRound(2, 2);
-// // game.playRound(2, 1); remove this round out to check for win
+// game.playRound(2, 1);
+
+// diagonal win test
+// game.playRound(0, 1);
+// game.playRound(0, 2);
+// game.playRound(0, 0);
+// game.playRound(1, 1);
+// game.playRound(1, 2);
+// game.playRound(2, 0);
+
+// spot taken test 
+game.playRound(1,1)
+game.playRound(1,0)
+game.playRound(0,1)
+game.playRound(1,0)
+
+
 game.printBoard();
