@@ -1,5 +1,7 @@
+const container = document.getElementById("container");
+
 function Gameboard() {
-  // board
+
 
   function Cell() {
     let value = 0;
@@ -20,6 +22,7 @@ function Gameboard() {
     for (let j = 0; j < columns; j++) {
       board[i].push(Cell());
     }
+ 
   }
 
   // printing board
@@ -191,5 +194,3 @@ function GameController() {
 
 const game = GameController();
 // test game by copying any of the logics from /PROJECTS/tic-tac-toe/tests.js
-
-
