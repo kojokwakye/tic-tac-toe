@@ -1,8 +1,7 @@
+"use strict";
 const container = document.getElementById("container");
 
 function Gameboard() {
-
-
   function Cell() {
     let value = 0;
     const addToken = (player) => {
@@ -12,18 +11,25 @@ function Gameboard() {
 
     return { addToken, getValue };
   }
+
   //  2d array
   const rows = 3;
   const columns = 3;
   const board = [];
 
+  const bits = document.createDocumentFragment();
+
   for (let i = 0; i < rows; i++) {
     board[i] = [];
     for (let j = 0; j < columns; j++) {
       board[i].push(Cell());
+      const div = document.createElement("div");
+      bits.appendChild(div).classList.add("squares");
     }
- 
   }
+  container.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+  container.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+  container.appendChild(bits);
 
   // printing board
   const printBoard = () => {
@@ -93,8 +99,6 @@ function GameController() {
       if (winner) {
         board.printBoard();
         setTimeout(() => console.log(`${winner.name || winner} wins!`), 2000);
-        // console.log(`${winner.name || winner} wins!`);
-        // board.printBoard(); returns undefined ?
         return;
       } else if (fullBoard()) {
         return;
@@ -102,7 +106,6 @@ function GameController() {
       // switch player
       switchPlayerTurn();
       printNewRound();
-      // board.printBoard();
     } else {
       console.log("spot taken");
       board.printBoard();
@@ -194,3 +197,11 @@ function GameController() {
 
 const game = GameController();
 // test game by copying any of the logics from /PROJECTS/tic-tac-toe/tests.js
+// game.playRound(0, 1);
+// game.playRound(0, 2);
+// game.playRound(1, 1);
+// game.playRound(2, 1);
+// game.playRound(1, 2);
+// game.playRound(0, 0);
+// game.playRound(1, 0);
+//
