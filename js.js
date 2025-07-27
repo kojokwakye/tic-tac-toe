@@ -88,6 +88,7 @@ function GameController() {
     if (moveSucessful) {
       const winner = checkWin();
       if (winner) {
+        board.printBoard();
         setTimeout(() => console.log(`${winner.name || winner} wins!`), 2000);
         // console.log(`${winner.name || winner} wins!`);
         // board.printBoard(); returns undefined ?
@@ -179,7 +180,8 @@ function GameController() {
         }
       }
     }
-    console.log("tie");
+    board.printBoard();
+    setTimeout(() => console.log("tie"), 2000);
     return true;
   };
 
@@ -189,3 +191,5 @@ function GameController() {
 
 const game = GameController();
 // test game by copying any of the logics from /PROJECTS/tic-tac-toe/tests.js
+
+
