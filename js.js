@@ -45,18 +45,18 @@ function Gameboard() {
   return { getBoard, tokenPlacement, printBoard };
 }
 
-function GameController(playerOneName = "X", playerTwoName = "0") {
+function GameController() {
   const board = Gameboard();
 
   // player variables
   const players = [
     {
-      name: playerOneName,
+      name: "player 1",
       token: "X",
     },
     {
-      name: playerTwoName,
-      token: "0",
+      name: "player 2",
+      token: "O",
     },
   ];
   let activePlayer = players[0];
@@ -70,7 +70,7 @@ function GameController(playerOneName = "X", playerTwoName = "0") {
 
   const printNewRound = () => {
     board.printBoard();
-    console.log(`${getActivePlayer().name}'s turn`);
+    console.log(`${getActivePlayer().token}'s turn`);
   };
 
   const playRound = (column, row) => {
@@ -79,14 +79,18 @@ function GameController(playerOneName = "X", playerTwoName = "0") {
       row,
       getActivePlayer().token
     );
-    console.log(`${getActivePlayer().name} dropped in ${column},${row} `);
+    console.log(
+      `${getActivePlayer().name} dropped ${
+        getActivePlayer().token
+      } ${column},${row} `
+    );
 
     if (moveSucessful) {
       const winner = checkWin();
       if (winner) {
-        console.log(`${winner.name || winner} wins!`);
-        // board.printBoard();
-
+        setTimeout(() => console.log(`${winner.name || winner} wins!`), 2000);
+        // console.log(`${winner.name || winner} wins!`);
+        // board.printBoard(); returns undefined ?
         return;
       } else if (fullBoard()) {
         return;
@@ -94,13 +98,14 @@ function GameController(playerOneName = "X", playerTwoName = "0") {
       // switch player
       switchPlayerTurn();
       printNewRound();
+      // board.printBoard();
     } else {
       console.log("spot taken");
       board.printBoard();
     }
   };
 
-  const winPatterns = [
+  const winLogic = [
     // rows
     [
       [0, 0],
@@ -147,7 +152,7 @@ function GameController(playerOneName = "X", playerTwoName = "0") {
   ];
 
   const checkWin = () => {
-    for (const pattern of winPatterns) {
+    for (const pattern of winLogic) {
       const values = pattern.map(([row, col]) =>
         board.getBoard()[row][col].getValue()
       );
@@ -166,6 +171,7 @@ function GameController(playerOneName = "X", playerTwoName = "0") {
   const fullBoard = () => {
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
+        winLogic;
         // checking the cell
         if (board.getBoard()[i][j].getValue() === 0) {
           // if the cell is empty
@@ -178,64 +184,8 @@ function GameController(playerOneName = "X", playerTwoName = "0") {
   };
 
   printNewRound();
-  return { playRound, printBoard: board.printBoard, checkWin, fullBoard };
+  return { playRound, checkWin, fullBoard };
 }
 
-// const game = GameController();
-
-// tests
-const testwin = () => {
-  const testgame = GameController();
-  testgame.playRound(0, 0);
-  testgame.playRound(1, 0);
-  testgame.playRound(0, 1);
-  testgame.playRound(1, 1);
-  testgame.playRound(0, 2);
-  testgame.printBoard();
-  console.log("x wins");
-};
-
-// // diagonal win test
-const diagonalTest = () => {
-  const diagonalWIn = GameController();
-  diagonalWIn.playRound(0, 1);
-  diagonalWIn.playRound(0, 2);
-  diagonalWIn.playRound(0, 0);
-  diagonalWIn.playRound(1, 1);
-  diagonalWIn.playRound(1, 2);
-  diagonalWIn.playRound(2, 0);
-  diagonalWIn.printBoard();
-  console.log("diagonal win test");
-};
-
-// Test for tie game
-const testTieGame = () => {
-  const testTie = GameController();
-  testTie.playRound(0, 0); // X
-  testTie.playRound(0, 1); // O
-  testTie.playRound(1, 1); // X
-  testTie.playRound(0, 2); // O
-  testTie.playRound(1, 2); // X
-  testTie.playRound(1, 0); // O
-  testTie.playRound(2, 0); // X
-  testTie.playRound(2, 2); // O
-  testTie.playRound(2, 1); // X
-  testTie.printBoard();
-  console.log("Tie test");
-};
-
-// spot taken test
-const spotTakenTest = () => {
-  const spotTaken = GameController();
-  spotTaken.playRound(1, 0);
-  spotTaken.playRound(1, 0);
-  spotTaken.printBoard();
-  console.log("spot taken test !");
-};
-
-// uncomment one of this to run test
-
-testwin();
-// diagonalTest();
-// testTieGame();
-// spotTakenTest();
+const game = GameController();
+// test game by copying any of the logics from /PROJECTS/tic-tac-toe/tests.js
