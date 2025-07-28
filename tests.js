@@ -34,5 +34,12 @@ game.playRound(1, 1);
 game.playRound(1, 2);
 game.playRound (2,2)
 
+// spot taken test 
+game.playRound(1, 1);
+game.playRound(2, 1);
+game.playRound(2,0)
+game.playRound(1,1)
+game.playRound(1,0)
+
 
 
