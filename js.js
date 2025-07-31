@@ -13,13 +13,12 @@ function Gameboard() {
   const getBoard = () => board;
 
   const tokenPlacement = (column, row, player) => {
-    const availableCells = board
-      .filter((row) => row[column].getValue() === 0)
-      .map((row) => row[column]);
-
-    if (!availableCells.length) return;
-    const lowestRow = availableCells.length - 1;
-    board[lowestRow][column].addToken(player);
+    if (board[row][column].getValue() === 0) {
+      board[row][column].addToken(player);
+      return true;
+    } else {
+      return false;
+    }
   };
 
   // printing board
@@ -57,7 +56,7 @@ function GameController(
     },
     {
       name: playerTwoName,
-      token: "0",
+      token: "O",
     },
   ];
 
@@ -76,7 +75,7 @@ function GameController(
 
   const playRound = (column, row) => {
     console.log(
-      `Dropping ${getActivePlayer().name}'s token into ${column}, ${row}`
+      `Dropping ${getActivePlayer().name}'s token into ${column},${row}`
     );
     board.tokenPlacement(column, row, getActivePlayer().token);
 
@@ -108,23 +107,25 @@ function controller() {
     // display player turn
     playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
 
-    board.forEach((row) => {
-      row.forEach((cell, index) => {
+    board.forEach((row, rowIndex) => {
+      row.forEach((cell, columnIndex) => {
         // anything clickable should be a button!
         const cellButton = document.createElement("button");
         cellButton.classList.add("cell");
 
-        cellButton.dataset.column = index;
+        cellButton.dataset.column = columnIndex;
+        cellButton.dataset.row = rowIndex;
         cellButton.textContent = cell.getValue();
         container.appendChild(cellButton);
       });
     });
   };
   function clickHandlerBoard(e) {
-    const selectedcell = e.target.dataset.column;
-    if (!selectedcell) return;
+    const selectedcol = e.target.dataset.column;
+    const selectedrow = e.target.dataset.row;
+    if (!selectedcol || !selectedrow) return;
 
-    game.playRound(selectedcell);
+    game.playRound(selectedcol, selectedrow);
     updatescreen();
   }
   container.addEventListener("click", clickHandlerBoard);
