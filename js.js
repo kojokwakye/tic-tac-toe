@@ -31,6 +31,13 @@ function Gameboard() {
   return { getBoard, tokenPlacement, printBoard };
 }
 
+const clearscreen = () => {
+  const cellButton = document.createElement("button");
+  cellButton.textContent = "";
+  console.log("i cant work");
+  return;
+};
+
 function Cell() {
   let value = 0;
 
@@ -88,16 +95,21 @@ function GameController(
     if (moveSucessful) {
       const winner = checkWin();
       if (winner) {
-        setTimeout(() => console.log(`${winner.name || winner} wins!`), 2000);
+        console.log(`${winner.name || winner} wins!`);
         board.printBoard();
+        clearscreen();
         return;
       } else if (fullBoard()) {
         return true;
       }
+      switchPlayerTurn();
+      printNewRound();
+    } else {
+      console.log("spot taken");
+      board.printBoard();
     }
 
-    switchPlayerTurn();
-    printNewRound();
+    // clearscreen();
   };
   const winLogic = [
     // rows
@@ -185,6 +197,7 @@ function GameController(
     checkWin,
     fullBoard,
     getBoard: board.getBoard,
+    // clearscreen,
   };
 }
 
@@ -201,7 +214,7 @@ function controller() {
     const activePlayer = game.getActivePlayer();
 
     // display player turn
-    playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
+    playerTurnDiv.textContent = `${activePlayer.token}'s turn...`;
 
     board.forEach((row, rowIndex) => {
       row.forEach((cell, columnIndex) => {
@@ -226,7 +239,6 @@ function controller() {
     updatescreen();
   }
   container.addEventListener("click", clickHandlerBoard);
-
   updatescreen();
 }
 
