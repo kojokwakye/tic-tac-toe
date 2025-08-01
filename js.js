@@ -211,7 +211,8 @@ function controller() {
 
         cellButton.dataset.column = columnIndex;
         cellButton.dataset.row = rowIndex;
-        cellButton.textContent = cell.getValue();
+        // if the cell is 0? show an empty string.
+        cellButton.textContent = cell.getValue() === 0 ? "" : cell.getValue();
         container.appendChild(cellButton);
       });
     });
