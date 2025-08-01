@@ -1,0 +1,29 @@
+body {
+  background: #b5d3eda1;
+  font-family: "Space Mono", monospace;
+  font-size: 1em;
+}
+
+#container {
+  width: 410px;
+  height: 410px;
+  display: grid;
+  border: 1px solid black;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 2rem;
+  border: 1px solid grey;
+  background: lightyellow;
+  cursor: pointer;
+}
+
+.cell:hover {
+  background-color: rgba(255, 0, 0, 0.153);
+}

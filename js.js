@@ -77,10 +77,104 @@ function GameController(
     console.log(
       `Dropping ${getActivePlayer().name}'s token into ${column},${row}`
     );
-    board.tokenPlacement(column, row, getActivePlayer().token);
+    // board.tokenPlacement(column, row, getActivePlayer().token);
+
+    const moveSucessful = board.tokenPlacement(
+      column,
+      row,
+      getActivePlayer().token
+    );
+
+    if (moveSucessful) {
+      const winner = checkWin();
+      if (winner) {
+        setTimeout(() => console.log(`${winner.name || winner} wins!`), 2000);
+        board.printBoard();
+        return;
+      } else if (fullBoard()) {
+        return true;
+      }
+    }
 
     switchPlayerTurn();
     printNewRound();
+  };
+  const winLogic = [
+    // rows
+    [
+      [0, 0],
+      [0, 1],
+      [0, 2],
+    ],
+    [
+      [1, 0],
+      [1, 1],
+      [1, 2],
+    ],
+    [
+      [2, 0],
+      [2, 1],
+      [2, 2],
+    ],
+    // columns
+    [
+      [0, 0],
+      [1, 0],
+      [2, 0],
+    ],
+    [
+      [0, 1],
+      [1, 1],
+      [2, 1],
+    ],
+    [
+      [0, 2],
+      [1, 2],
+      [2, 2],
+    ],
+    // diagonals
+    [
+      [0, 0],
+      [1, 1],
+      [2, 2],
+    ],
+    [
+      [0, 2],
+      [1, 1],
+      [2, 0],
+    ],
+  ];
+
+  const checkWin = () => {
+    for (const pattern of winLogic) {
+      const values = pattern.map(([row, col]) =>
+        board.getBoard()[row][col].getValue()
+      );
+      if (
+        values[0] === values[1] &&
+        values[1] === values[2] &&
+        values[0] !== 0
+      ) {
+        const winner = players.find((player) => player.token === values[0]);
+        return winner;
+      }
+    }
+    return false; // no win
+  };
+  const fullBoard = () => {
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        winLogic;
+        // checking the cell
+        if (board.getBoard()[i][j].getValue() === 0) {
+          // if the cell is empty
+          return false;
+        }
+      }
+    }
+    console.log("tie");
+    board.printBoard();
+    return true;
   };
 
   printNewRound();
@@ -88,6 +182,8 @@ function GameController(
   return {
     playRound,
     getActivePlayer,
+    checkWin,
+    fullBoard,
     getBoard: board.getBoard,
   };
 }
