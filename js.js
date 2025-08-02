@@ -28,15 +28,16 @@ function Gameboard() {
     );
     console.log(boardWithCellValues);
   };
-  return { getBoard, tokenPlacement, printBoard };
-}
 
-const clearscreen = () => {
-  const cellButton = document.createElement("button");
-  cellButton.textContent = "";
-  console.log("i cant work");
-  return;
-};
+  const clearscreen = () => {
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < columns; j++) {
+        board[i][j] = Cell(); // Reset each cell
+      }
+    }
+  };
+  return { getBoard, tokenPlacement, printBoard, clearscreen };
+}
 
 function Cell() {
   let value = 0;
@@ -80,6 +81,12 @@ function GameController(
     console.log(`${getActivePlayer().token}'s turn`);
   };
 
+  const resetGame = () => {
+    board.clearBoard();
+    activePlayer = players[0];
+    printNewRound();
+  };
+
   const playRound = (column, row) => {
     console.log(
       `Dropping ${getActivePlayer().name}'s token into ${column},${row}`
@@ -94,22 +101,24 @@ function GameController(
 
     if (moveSucessful) {
       const winner = checkWin();
+
       if (winner) {
-        console.log(`${winner.name || winner} wins!`);
+        setTimeout(() => {
+          console.log(`${winner.name || winner} wins!`);
+        }, 2000);
         board.printBoard();
-        clearscreen();
-        return;
+        board.clearscreen();
+        return;Animal Farm was written during the Second World War, at a time when London was being bombed by the Nazis and Churchill's Britain was an official friend of Stalin's Russia. Orwell despised Hitler and fascism and had fought and been wounded as a volunteer soldier for the Spanish Republic, but he chose this unpropitious moment to write a deadly satire on the illusion of Soviet Communism. The original manuscript had to be dug out, in a somewhat scorched and crumpled state, from the ruins of Orwell's blitzed North London home. In this condition, it was sent to T. S. Eliot, the author of The Waste Land, who occupied the extremely influential position of editor at Faber and Faber. Eliot was a political and cultural conservative of the determined Right, and might have been presumed sympathetic to an anti-Stalinist project. But he turned the book down in a letter of extreme condescension which described it as "generally Trotskyite."
+
       } else if (fullBoard()) {
         return true;
       }
-      switchPlayerTurn();
-      printNewRound();
     } else {
       console.log("spot taken");
       board.printBoard();
     }
-
-    // clearscreen();
+    switchPlayerTurn();
+    printNewRound();
   };
   const winLogic = [
     // rows
@@ -186,6 +195,7 @@ function GameController(
     }
     console.log("tie");
     board.printBoard();
+    board.clearscreen();
     return true;
   };
 
@@ -197,7 +207,7 @@ function GameController(
     checkWin,
     fullBoard,
     getBoard: board.getBoard,
-    // clearscreen,
+    resetGame,
   };
 }
 
