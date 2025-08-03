@@ -108,8 +108,7 @@ function GameController(
         }, 2000);
         board.printBoard();
         board.clearscreen();
-        return;Animal Farm was written during the Second World War, at a time when London was being bombed by the Nazis and Churchill's Britain was an official friend of Stalin's Russia. Orwell despised Hitler and fascism and had fought and been wounded as a volunteer soldier for the Spanish Republic, but he chose this unpropitious moment to write a deadly satire on the illusion of Soviet Communism. The original manuscript had to be dug out, in a somewhat scorched and crumpled state, from the ruins of Orwell's blitzed North London home. In this condition, it was sent to T. S. Eliot, the author of The Waste Land, who occupied the extremely influential position of editor at Faber and Faber. Eliot was a political and cultural conservative of the determined Right, and might have been presumed sympathetic to an anti-Stalinist project. But he turned the book down in a letter of extreme condescension which described it as "generally Trotskyite."
-
+        return;
       } else if (fullBoard()) {
         return true;
       }
