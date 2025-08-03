@@ -82,7 +82,7 @@ function GameController(
   };
 
   const resetGame = () => {
-    board.clearBoard();
+    board.clearscreen();
     activePlayer = players[0];
     printNewRound();
   };
@@ -91,7 +91,6 @@ function GameController(
     console.log(
       `Dropping ${getActivePlayer().name}'s token into ${column},${row}`
     );
-    // board.tokenPlacement(column, row, getActivePlayer().token);
 
     const moveSucessful = board.tokenPlacement(
       column,
@@ -99,31 +98,45 @@ function GameController(
       getActivePlayer().token
     );
 
+    const moveboard = document.querySelector(".moveboard");
     if (moveSucessful) {
       const winner = checkWin();
 
       if (winner) {
+        moveboard.textContent = `${winner.name} won this round`;
+        moveboard.classList.add("flash");
         setTimeout(() => {
-          console.log(`${winner.name || winner} wins!`);
-        }, 2000);
+          moveboard.classList.remove("flash");
+        }, 2500);
+        console.log(`${winner.name || winner} wins!`);
         board.printBoard();
-        board.clearscreen();
+        setTimeout(() => {
+          resetGame();
+        }, 1500);
         return;
       } else if (fullBoard()) {
+        moveboard.textContent = "board is full";
+        moveboard.classList.add("flash");
+        setTimeout(() => {
+          moveboard.classList.remove("flash");
+        }, 2500);
+        setTimeout(() => {
+          resetGame();
+        }, 1500);
         return true;
       }
+      switchPlayerTurn();
+      printNewRound();
     } else {
       console.log("spot taken");
       board.printBoard();
     }
-    switchPlayerTurn();
-    printNewRound();
   };
+
   const winLogic = [
-    // rows
     [
       [0, 0],
-      [0, 1],
+      [0, 1], // rows
       [0, 2],
     ],
     [
@@ -194,7 +207,10 @@ function GameController(
     }
     console.log("tie");
     board.printBoard();
-    board.clearscreen();
+    // board.clearscreen();
+    setTimeout(() => {
+      board.clearscreen();
+    }, 1000);
     return true;
   };
 
@@ -214,6 +230,7 @@ function controller() {
   const game = GameController();
   const playerTurnDiv = document.querySelector(".turn");
   const container = document.getElementById("container");
+  // const moveboard = document.querySelector(".moveboard");
 
   const updatescreen = () => {
     // clear the board
@@ -223,7 +240,7 @@ function controller() {
     const activePlayer = game.getActivePlayer();
 
     // display player turn
-    playerTurnDiv.textContent = `${activePlayer.token}'s turn...`;
+    playerTurnDiv.textContent = `${activePlayer.token}'s turn`;
 
     board.forEach((row, rowIndex) => {
       row.forEach((cell, columnIndex) => {

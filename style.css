@@ -2,6 +2,11 @@ body {
   background: #b5d3eda1;
   font-family: "Space Mono", monospace;
   font-size: 1em;
+  /* display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  height: 100vh; */
 }
 
 #container {
@@ -26,4 +31,38 @@ body {
 
 .cell:hover {
   background-color: rgba(255, 0, 0, 0.153);
+}
+
+.turn {
+  font-size: 50px;
+}
+
+.moveboard {
+  outline: 1px solid red;
+  width: 300px;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.moveboard.flash {
+  animation: showThenHide 2s ease-in-out forwards;
+}
+
+@keyframes showThenHide {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+  }
+  10% {
+    opacity: 1;
+    visibility: visible;
+  }
+  90% {
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
