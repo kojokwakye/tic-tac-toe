@@ -1,3 +1,4 @@
+"use strict";
 function Gameboard() {
   const rows = 3;
   const columns = 3;
@@ -32,7 +33,9 @@ function Gameboard() {
   const clearscreen = () => {
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < columns; j++) {
-        board[i][j] = Cell(); // Reset each cell
+        setTimeout(() => {
+          board[i][j] = Cell();
+        }, 100); // reset each cell
       }
     }
   };
@@ -51,24 +54,22 @@ function Cell() {
   return { addToken, getValue };
 }
 
-function GameController(
-  playerOneName = "Player One",
-  playerTwoName = "Player Two"
-) {
+function GameController(playerOne = "Player One", playerTwo = "Player Two") {
   const board = Gameboard();
   // player variables
   const players = [
     {
-      name: playerOneName,
+      name: playerOne,
       token: "X",
     },
     {
-      name: playerTwoName,
+      name: playerTwo,
       token: "O",
     },
   ];
 
-  let activePlayer = players[0];
+  // let activePlayer = players[0];
+  let activePlayer = Math.random() < 0.5 ? players[0] : players[1];
 
   // switch player
   const switchPlayerTurn = () => {
@@ -83,8 +84,7 @@ function GameController(
 
   const resetGame = () => {
     board.clearscreen();
-    activePlayer = players[0];
-    printNewRound();
+    activePlayer = Math.random() < 0.5 ? players[0] : players[1];
   };
 
   const playRound = (column, row) => {
@@ -98,31 +98,15 @@ function GameController(
       getActivePlayer().token
     );
 
-    const moveboard = document.querySelector(".moveboard");
     if (moveSucessful) {
       const winner = checkWin();
-
       if (winner) {
-        moveboard.textContent = `${winner.name} won this round`;
-        moveboard.classList.add("flash");
-        setTimeout(() => {
-          moveboard.classList.remove("flash");
-        }, 2500);
-        console.log(`${winner.name || winner} wins!`);
+        console.log(`${winner.name || winner} wins! `);
         board.printBoard();
-        setTimeout(() => {
-          resetGame();
-        }, 1500);
+        resetGame();
         return;
       } else if (fullBoard()) {
-        moveboard.textContent = "board is full";
-        moveboard.classList.add("flash");
-        setTimeout(() => {
-          moveboard.classList.remove("flash");
-        }, 2500);
-        setTimeout(() => {
-          resetGame();
-        }, 1500);
+        resetGame();
         return true;
       }
       switchPlayerTurn();
@@ -207,10 +191,6 @@ function GameController(
     }
     console.log("tie");
     board.printBoard();
-    // board.clearscreen();
-    setTimeout(() => {
-      board.clearscreen();
-    }, 1000);
     return true;
   };
 
@@ -230,29 +210,51 @@ function controller() {
   const game = GameController();
   const playerTurnDiv = document.querySelector(".turn");
   const container = document.getElementById("container");
-  // const moveboard = document.querySelector(".moveboard");
 
   const updatescreen = () => {
     // clear the board
     container.textContent = "";
 
     const board = game.getBoard();
+    const winner = game.checkWin();
     const activePlayer = game.getActivePlayer();
+    // playerTurnDiv.textContent = `${activePlayer.name}(${activePlayer.token})turn`;
+    // playerTurnDiv.textContent = `${activePlayer.name}(${activePlayer.token})'s turn`;
+    playerTurnDiv.textContent = `player ${activePlayer.token}'s turn`;
 
-    // display player turn
-    playerTurnDiv.textContent = `${activePlayer.token}'s turn`;
+    if (winner) {
+      playerTurnDiv.textContent = `player ${activePlayer.token})'s turn`;
+      // playerTurnDiv.textContent = `${activePlayer.name} won this round`;
+    }
+
+    const resetButton = document.getElementById("resetButton");
+    resetButton.addEventListener("click", () => {
+      game.resetGame();
+      playerTurnDiv.textContent = `player ${activePlayer.token}'s turn`;
+      console.log("clicked");
+    });
+
+    const cellButton = document.createElement("button");
+    cellButton.classList.add("cell");
 
     board.forEach((row, rowIndex) => {
       row.forEach((cell, columnIndex) => {
-        // anything clickable should be a button!
         const cellButton = document.createElement("button");
         cellButton.classList.add("cell");
-
         cellButton.dataset.column = columnIndex;
         cellButton.dataset.row = rowIndex;
         // if the cell is 0? show an empty string.
         cellButton.textContent = cell.getValue() === 0 ? "" : cell.getValue();
         container.appendChild(cellButton);
+
+        if (winner) {
+          playerTurnDiv.textContent = ` player ${winner.token} won this round`;
+          setTimeout(() => {
+            cellButton.textContent = "";
+          }, 2000);
+
+        
+        }
       });
     });
   };
