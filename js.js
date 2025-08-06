@@ -256,18 +256,10 @@ function controller() {
       const winner = game.checkWin();
       playerTurnDiv.textContent = `player ${winner.token} won this round`;
       updatescreen();
-      setTimeout(() => {
-        game.resetGame();
-        updatescreen();
-      }, 5000);
     } else if (result === "tie") {
       updatescreen();
       playerTurnDiv.textContent = "tie";
-
-      setTimeout(() => {
-        game.resetGame();
-        updatescreen();
-      }, 5000);
+ 
     } else if (result === "spot taken" || result === "game over") {
       return;
     } else {
