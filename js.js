@@ -33,9 +33,7 @@ function Gameboard() {
   const clearscreen = () => {
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < columns; j++) {
-        setTimeout(() => {
-          board[i][j] = Cell();
-        }, 100); // reset each cell
+        board[i][j] = Cell();
       }
     }
   };
@@ -82,15 +80,22 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
     console.log(`${getActivePlayer().token}'s turn`);
   };
 
+  let gameActive = true;
+
   const resetGame = () => {
     board.clearscreen();
     activePlayer = Math.random() < 0.5 ? players[0] : players[1];
+    gameActive = true;
   };
 
   const playRound = (column, row) => {
     console.log(
       `Dropping ${getActivePlayer().name}'s token into ${column},${row}`
     );
+
+    if (!gameActive) {
+      return "game over";
+    }
 
     const moveSucessful = board.tokenPlacement(
       column,
@@ -101,19 +106,17 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
     if (moveSucessful) {
       const winner = checkWin();
       if (winner) {
-        console.log(`${winner.name || winner} wins! `);
-        board.printBoard();
-        resetGame();
-        return;
+        gameActive = false;
+        return "win";
       } else if (fullBoard()) {
-        resetGame();
-        return true;
+        gameActive = false;
+        return "tie";
       }
       switchPlayerTurn();
       printNewRound();
     } else {
       console.log("spot taken");
-      board.printBoard();
+      return "spot taken";
     }
   };
 
@@ -211,6 +214,12 @@ function controller() {
   const playerTurnDiv = document.querySelector(".turn");
   const container = document.getElementById("container");
 
+  const resetButton = document.getElementById("resetButton");
+  resetButton.addEventListener("click", () => {
+    game.resetGame();
+    updatescreen();
+  });
+
   const updatescreen = () => {
     // clear the board
     container.textContent = "";
@@ -218,24 +227,12 @@ function controller() {
     const board = game.getBoard();
     const winner = game.checkWin();
     const activePlayer = game.getActivePlayer();
-    // playerTurnDiv.textContent = `${activePlayer.name}(${activePlayer.token})turn`;
-    // playerTurnDiv.textContent = `${activePlayer.name}(${activePlayer.token})'s turn`;
-    playerTurnDiv.textContent = `player ${activePlayer.token}'s turn`;
 
     if (winner) {
-      playerTurnDiv.textContent = `player ${activePlayer.token})'s turn`;
-      // playerTurnDiv.textContent = `${activePlayer.name} won this round`;
+      playerTurnDiv.textContent = `Player ${winner.token} won this round!`;
+    } else {
+      playerTurnDiv.textContent = `Player ${activePlayer.token}'s turn`;
     }
-
-    const resetButton = document.getElementById("resetButton");
-    resetButton.addEventListener("click", () => {
-      game.resetGame();
-      playerTurnDiv.textContent = `player ${activePlayer.token}'s turn`;
-      console.log("clicked");
-    });
-
-    const cellButton = document.createElement("button");
-    cellButton.classList.add("cell");
 
     board.forEach((row, rowIndex) => {
       row.forEach((cell, columnIndex) => {
@@ -246,15 +243,6 @@ function controller() {
         // if the cell is 0? show an empty string.
         cellButton.textContent = cell.getValue() === 0 ? "" : cell.getValue();
         container.appendChild(cellButton);
-
-        if (winner) {
-          playerTurnDiv.textContent = ` player ${winner.token} won this round`;
-          setTimeout(() => {
-            cellButton.textContent = "";
-          }, 2000);
-
-        
-        }
       });
     });
   };
@@ -263,9 +251,30 @@ function controller() {
     const selectedrow = e.target.dataset.row;
     if (!selectedcol || !selectedrow) return;
 
-    game.playRound(selectedcol, selectedrow);
-    updatescreen();
+    const result = game.playRound(selectedcol, selectedrow);
+    if (result === "win") {
+      const winner = game.checkWin();
+      playerTurnDiv.textContent = `player ${winner.token} won this round`;
+      updatescreen();
+      setTimeout(() => {
+        game.resetGame();
+        updatescreen();
+      }, 5000);
+    } else if (result === "tie") {
+      updatescreen();
+      playerTurnDiv.textContent = "tie";
+
+      setTimeout(() => {
+        game.resetGame();
+        updatescreen();
+      }, 5000);
+    } else if (result === "spot taken" || result === "game over") {
+      return;
+    } else {
+      updatescreen();
+    }
   }
+
   container.addEventListener("click", clickHandlerBoard);
   updatescreen();
 }
