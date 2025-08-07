@@ -1,3 +1,8 @@
+* {
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   background: rgb(235, 235, 229);
   font-family: "Space Mono", monospace;
@@ -11,6 +16,7 @@ body {
   font-variation-settings: "wdth" 100;
   justify-content: center;
   align-items: center;
+  color: grey;
   flex-direction: row;
 }
 
@@ -24,9 +30,10 @@ h1 {
   width: 410px;
   height: 410px;
   display: grid;
-  border: 1px solid black;
+  border: 1px solid #9f9f9f75;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
+  background-color: #add8e669;
 }
 
 .cell {
@@ -35,15 +42,12 @@ h1 {
   align-items: center;
   text-align: center;
   font-size: 2rem;
-  border: 1px solid grey;
+  border: 0.5px solid #80808094;
   background: rgb(235, 235, 229);
   cursor: pointer;
-  box-shadow: 0 2px #999;
+  box-shadow: 0 1px #999;
   margin: 5px;
-}
-
-.cell:hover {
-  /* background-color: rgba(255, 0, 0, 0.153); */
+  color: #545454;
 }
 
 .cell:active {
@@ -51,7 +55,9 @@ h1 {
   box-shadow: 0 1px #666;
   transform: translateY(2px);
 }
-
+.main {
+  text-align: center;
+}
 .turn {
   font-size: 20px;
   margin-bottom: 16px;
@@ -64,19 +70,36 @@ h1 {
 #resetButton {
   border: 1px solid grey;
   padding: 10px;
-  background-color: #f8e0e0;
+  background-color: #ebebe5;
   cursor: pointer;
   font-weight: bold;
   text-align: center;
   box-shadow: 0 2px #999;
+  color: #4d4949;
 }
 
 #resetButton:hover {
-  background-color: rgba(255, 0, 0, 0.153);
+  background-color: rgba(187, 187, 187, 0.21);
 }
 
 #resetButton:active {
-  /* background-color: #3e8e41; */
   box-shadow: 0 1px #666;
   transform: translateY(2px);
+}
+
+@media screen and (max-width: 480px) {
+  body {
+    text-align: center;
+    display: flex;
+  }
+  h1 {
+    display: none;
+    writing-mode: initial !important;
+    text-orientation: initial !important;
+  }
+
+  #container {
+    width: 350px;
+    height: 350px;
+  }
 }

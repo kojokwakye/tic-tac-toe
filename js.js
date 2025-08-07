@@ -27,7 +27,7 @@ function Gameboard() {
     const boardWithCellValues = board.map((row) =>
       row.map((cell) => cell.getValue())
     );
-    console.log(boardWithCellValues);
+    // console.log(boardWithCellValues);
   };
 
   const clearscreen = () => {
@@ -77,7 +77,7 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
 
   const printNewRound = () => {
     board.printBoard();
-    console.log(`${getActivePlayer().token}'s turn`);
+    // console.log(`${getActivePlayer().token}'s turn`);
   };
 
   let gameActive = true;
@@ -115,7 +115,7 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
       switchPlayerTurn();
       printNewRound();
     } else {
-      console.log("spot taken");
+      // console.log("spot taken");
       return "spot taken";
     }
   };
@@ -192,7 +192,7 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
         }
       }
     }
-    console.log("tie");
+    // console.log("tie");
     board.printBoard();
     return true;
   };
@@ -229,9 +229,9 @@ function controller() {
     const activePlayer = game.getActivePlayer();
 
     if (winner) {
-      playerTurnDiv.textContent = `Player ${winner.token} won this round!`;
+      playerTurnDiv.textContent = `${winner.token} won this round!`;
     } else {
-      playerTurnDiv.textContent = `Player ${activePlayer.token}'s turn`;
+      playerTurnDiv.textContent = `${activePlayer.token}'s turn`;
     }
 
     board.forEach((row, rowIndex) => {
@@ -246,6 +246,7 @@ function controller() {
       });
     });
   };
+
   function clickHandlerBoard(e) {
     const selectedcol = e.target.dataset.column;
     const selectedrow = e.target.dataset.row;
@@ -254,12 +255,14 @@ function controller() {
     const result = game.playRound(selectedcol, selectedrow);
     if (result === "win") {
       const winner = game.checkWin();
-      playerTurnDiv.textContent = `player ${winner.token} won this round`;
+      playerTurnDiv.textContent = `${winner.token} won this round`;
       updatescreen();
     } else if (result === "tie") {
       updatescreen();
+      document.querySelectorAll(".cell").forEach((cell) => {
+        cell.style.backgroundColor = '#f5b9b96b';
+      });
       playerTurnDiv.textContent = "tie";
- 
     } else if (result === "spot taken" || result === "game over") {
       return;
     } else {
