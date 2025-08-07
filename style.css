@@ -1,12 +1,12 @@
 body {
-  background: #b5d3eda1;
+  background: rgb(235, 235, 229);
   font-family: "Space Mono", monospace;
   font-size: 1em;
-  /* display: flex;
+  display: flex;
   justify-content: center;
-  align-content: center;
   align-items: center;
-  height: 100vh; */
+  height: 100vh;
+  flex-direction: column;
 }
 
 #container {
@@ -25,7 +25,7 @@ body {
   text-align: center;
   font-size: 2rem;
   border: 1px solid grey;
-  background: lightyellow;
+  background: rgb(235, 235, 229);
   cursor: pointer;
 }
 
@@ -34,35 +34,22 @@ body {
 }
 
 .turn {
-  font-size: 50px;
+  font-size: 20px;
+  margin-bottom: 16px;
 }
 
-.moveboard {
-  outline: 1px solid red;
-  width: 300px;
-  opacity: 0;
-  visibility: hidden;
+.buttons {
+  margin-top: 17px;
 }
 
-.moveboard.flash {
-  animation: showThenHide 2s ease-in-out forwards;
+#resetButton {
+  border: 1px solid grey;
+  padding: 10px;
+  background-color: #f8e0e0;
+  cursor: pointer;
+  font-weight: bold;
 }
 
-@keyframes showThenHide {
-  0% {
-    opacity: 0;
-    visibility: hidden;
-  }
-  10% {
-    opacity: 1;
-    visibility: visible;
-  }
-  90% {
-    opacity: 1;
-    visibility: visible;
-  }
-  100% {
-    opacity: 0;
-    visibility: hidden;
-  }
+#resetButton:hover {
+  background-color: rgba(255, 0, 0, 0.153);
 }
