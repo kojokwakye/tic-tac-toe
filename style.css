@@ -3,10 +3,21 @@ body {
   font-family: "Space Mono", monospace;
   font-size: 1em;
   display: flex;
+  height: 100vh;
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  flex-direction: column;
+  flex-direction: row;
+}
+
+h1 {
+  font-weight: 500;
+  writing-mode: sideways-lr;
+  text-orientation: mixed;
 }
 
 #container {
@@ -27,10 +38,18 @@ body {
   border: 1px solid grey;
   background: rgb(235, 235, 229);
   cursor: pointer;
+  box-shadow: 0 2px #999;
+  margin: 5px;
 }
 
 .cell:hover {
-  background-color: rgba(255, 0, 0, 0.153);
+  /* background-color: rgba(255, 0, 0, 0.153); */
+}
+
+.cell:active {
+  /* background-color: #3e8e41; */
+  box-shadow: 0 1px #666;
+  transform: translateY(2px);
 }
 
 .turn {
@@ -48,8 +67,16 @@ body {
   background-color: #f8e0e0;
   cursor: pointer;
   font-weight: bold;
+  text-align: center;
+  box-shadow: 0 2px #999;
 }
 
 #resetButton:hover {
   background-color: rgba(255, 0, 0, 0.153);
+}
+
+#resetButton:active {
+  /* background-color: #3e8e41; */
+  box-shadow: 0 1px #666;
+  transform: translateY(2px);
 }
