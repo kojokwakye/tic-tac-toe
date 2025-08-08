@@ -59,10 +59,12 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
     {
       name: playerOne,
       token: "X",
+      score: 0,
     },
     {
       name: playerTwo,
       token: "O",
+      score: 0,
     },
   ];
 
@@ -92,7 +94,6 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
     console.log(
       `Dropping ${getActivePlayer().name}'s token into ${column},${row}`
     );
-
     if (!gameActive) {
       return "game over";
     }
@@ -212,6 +213,9 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
 function controller() {
   const game = GameController();
   const playerTurnDiv = document.querySelector(".turn");
+  const playeronescore = document.querySelector(".playeronescore");
+  const playertwoscore = document.querySelector(".playertwoscore");
+
   const container = document.getElementById("container");
 
   const resetButton = document.getElementById("resetButton");
@@ -219,6 +223,18 @@ function controller() {
     game.resetGame();
     updatescreen();
   });
+
+  const updateScore = (winner) => {
+    if (winner && winner.token === "X") {
+      winner.score++;
+      playeronescore.textContent = `X   -   ${winner.score}`;
+      console.log(`x has ${winner.score}`);
+    } else if (winner && winner.token === "O") {
+      winner.score++;
+      playertwoscore.textContent = `O  -   ${winner.score}`;
+      console.log(`o has: ${winner.score}`);
+    }
+  };
 
   const updatescreen = () => {
     // clear the board
@@ -255,12 +271,16 @@ function controller() {
     const result = game.playRound(selectedcol, selectedrow);
     if (result === "win") {
       const winner = game.checkWin();
+      // playeronescore.textContent = `x: ${winner.score}`;
+      // playertwoscore.textContent = `0:${winner.score}`;
+      updateScore(winner);
       playerTurnDiv.textContent = `${winner.token} won this round`;
+
       updatescreen();
     } else if (result === "tie") {
       updatescreen();
       document.querySelectorAll(".cell").forEach((cell) => {
-        cell.style.backgroundColor = '#f5b9b96b';
+        cell.style.backgroundColor = "#f5b9b96b";
       });
       playerTurnDiv.textContent = "tie";
     } else if (result === "spot taken" || result === "game over") {

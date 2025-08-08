@@ -25,6 +25,16 @@ h1 {
   writing-mode: sideways-lr;
   text-orientation: mixed;
 }
+.scoreboard {
+  margin-left: 10px;
+  /* outline: 1px solid red; */
+}
+
+.scoreboard > p {
+  border-bottom: 0.5px solid #bac4c5;
+  padding: 5px 0;
+  margin: 10px 5px;
+}
 
 #container {
   width: 410px;
@@ -96,6 +106,10 @@ h1 {
     display: none;
     writing-mode: initial !important;
     text-orientation: initial !important;
+  }
+
+  .scoreboard {
+    display: none;
   }
 
   #container {
