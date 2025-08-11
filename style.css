@@ -79,6 +79,10 @@ h1 {
   margin-bottom: 16px;
 }
 
+.token {
+  font-weight: 600;
+}
+
 .buttons {
   margin-top: 17px;
   margin-top: 17px;
@@ -122,6 +126,20 @@ h1 {
 
   .turn {
     margin-bottom: 0;
+  }
+
+  .scoreboard {
+    margin-left: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .scoreboard > p {
+    border-bottom: none;
+  }
+
+  .buttons {
+    margin-top: 0;
   }
 
   h1 {
