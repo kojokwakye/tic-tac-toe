@@ -224,6 +224,12 @@ function controller() {
     updatescreen();
   });
 
+  const resetGameButton = document.getElementById("reloadPage");
+  resetGameButton.addEventListener("click", () => {
+    location.reload();
+    console.log("clicked");
+  });
+
   const updateScore = (winner) => {
     if (winner && winner.token === "X") {
       winner.score++;

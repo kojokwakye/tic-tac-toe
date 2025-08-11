@@ -15,3 +15,4 @@ a responsive, interactive tic-tac-toe game built with html, css, and vanilla js.
 ## screenshot
 
 ![demo](/img/Screenshot%20from%202025-08-09%2015-55-14.png)
+0+
