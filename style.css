@@ -1,6 +1,7 @@
 * {
   padding: 0;
   box-sizing: border-box;
+  /*! outline: 1px solid red; */
 }
 
 body {
@@ -8,16 +9,16 @@ body {
   font-family: "Space Mono", monospace;
   font-size: 1em;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   height: 100vh;
   font-family: "Roboto", sans-serif;
   font-optical-sizing: auto;
   font-weight: 300;
   font-style: normal;
   font-variation-settings: "wdth" 100;
-  justify-content: center;
-  align-items: center;
   color: grey;
-  flex-direction: row;
 }
 
 h1 {
@@ -64,22 +65,25 @@ h1 {
 }
 
 .cell:active {
-  /* background-color: #3e8e41; */
   box-shadow: 0 1px #666;
   transform: translateY(2px);
 }
 .main {
-  text-align: center;
+  /* text-align: center; */
+  display: flex;
+
+  align-items: center;
 }
 .turn {
   font-size: 20px;
   margin-bottom: 16px;
+
 }
 
 .buttons {
   margin-top: 17px;
-  display: flex;
-  justify-content: space-around;
+  /* display: flex;
+  justify-content: space-around; */
 }
 
 #resetButton,
@@ -105,24 +109,23 @@ h1 {
   transform: translateY(2px);
 }
 
-/* .buttons {
-  display: flex;
-  justify-content: space-around;
-} */
-
 @media screen and (max-width: 480px) {
   body {
+    /* text-align: center; */
+  }
+
+  .main {
+    display: block;
     text-align: center;
   }
 
-  h1 {
-    display: none;
-    writing-mode: initial !important;
-    text-orientation: initial !important;
+  .turn {
+    margin-bottom: 0;
   }
 
-  .scoreboard {
-    display: none;
+  h1 {
+    writing-mode: initial !important;
+    text-orientation: initial !important;
   }
 
   #container {
