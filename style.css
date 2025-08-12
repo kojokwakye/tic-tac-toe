@@ -69,7 +69,6 @@ h1 {
   transform: translateY(2px);
 }
 .main {
-  /* text-align: center; */
   display: flex;
 
   align-items: center;
@@ -77,10 +76,6 @@ h1 {
 .turn {
   font-size: 20px;
   margin-bottom: 16px;
-}
-
-.tokens {
-  font-weight: 600;
 }
 
 .buttons {
@@ -115,10 +110,6 @@ h1 {
 }
 
 @media screen and (max-width: 480px) {
-  body {
-    /* text-align: center; */
-  }
-
   .main {
     display: block;
     text-align: center;
@@ -129,13 +120,14 @@ h1 {
   }
 
   .scoreboard {
-    margin-left: 0;
+    margin: 0;
     display: flex;
     justify-content: center;
   }
 
   .scoreboard > p {
     border-bottom: none;
+    padding: 10px 11px;
   }
 
   .buttons {
@@ -143,6 +135,7 @@ h1 {
   }
 
   h1 {
+    margin: 10px;
     writing-mode: initial !important;
     text-orientation: initial !important;
   }
