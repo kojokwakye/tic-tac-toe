@@ -1,4 +1,4 @@
-# [tic-tac-toe](https://kojokwakye.github.io/tic-tac-toe/)
+# [tic tac toe](https://kojokwakye.github.io/tic-tac-toe/)
 
 a responsive, interactive tic-tac-toe game built with html, css, and vanilla js.
 
